@@ -3,12 +3,13 @@ A simple lightweight melee raycast module designed to be run on the client. Func
 Supports both raycasting via attachments or BlockCasting an object.
 
 # Settings:
+```
 Object: BasePart - The part that is used as either the parent for the attachments or the object which size and CFrame is used for the BlockCast.
 Type: String - The 2 types of raycasting that can be done. "Raycast" uses attachments and "BlockCast" is blockcasting.
 RayParams: RaycastParams - The RaycastParams used for all raycasts done by the module.
 AttachmentName: String - Attachments with this specefied name are used as raycast points.
 OnHit: function - The function that's called whenever a hit gets validated. Returns the hit character.
-
+```
 
 # Example usage:
 ```lua
