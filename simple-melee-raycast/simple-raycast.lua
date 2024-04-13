@@ -5,6 +5,7 @@ type Settings = {
 	AttachmentName: string,
 	RayParams: RaycastParams,
 	Type: string,
+	Debounce: boolean,
 	OnHit: (Char: Model) -> (),
 	Validate: (HitPart: BasePart) -> ()
 }
@@ -31,6 +32,7 @@ return {New = function(Settings: Settings): ModuleType
 	local BreakConnnections = {}
 	local ToRemove = {}
 	local DebugTrails = {}
+	local AlreadyHit = {}
 	local Interpolation = Settings.Interpolation
 	
 	local CastConnection: RBXScriptConnection = nil
@@ -39,7 +41,10 @@ return {New = function(Settings: Settings): ModuleType
 	Module.Type = Settings.Type or "Raycast"
 	Module.Object = Settings.Object
 	Module.OnHit = Settings.OnHit
+	Module.Debounce = Settings.Debounce or true
+	
 	Module._DebugEnabled = false
+	
 	
 	
 	if not Settings.RayParams then
@@ -137,7 +142,9 @@ return {New = function(Settings: Settings): ModuleType
 		SafeDC(CastConnection)
 		
 		Module.Running = true
-
+		
+		table.clear(AlreadyHit)
+		
 		local LastPositions = {}
 
 		if Module._DebugEnabled and not Interpolation then
@@ -165,7 +172,11 @@ return {New = function(Settings: Settings): ModuleType
 			local function ProcessRay(NewRay: RaycastResult)
 				if NewRay and NewRay.Instance then
 					local GetPart = Module.Validate(NewRay.Instance)
-					if GetPart then
+					if GetPart and not (Module.Debounce and AlreadyHit[GetPart]) then
+						if Module.Debounce then
+							AlreadyHit[GetPart] = true
+						end
+						
 						Module.OnHit(GetPart)
 					end
 				end
@@ -226,6 +237,8 @@ return {New = function(Settings: Settings): ModuleType
 
 		SetTrails(false)
 		
+		table.clear(AlreadyHit)
+		
 		Module.Running = false
 	end
 
@@ -235,6 +248,7 @@ return {New = function(Settings: Settings): ModuleType
 		end
 		
 		table.clear(DebugTrails)
+		table.clear(AlreadyHit)
 
 		for _, Obj: Instance in pairs(ToRemove) do
 			Obj:Destroy()
