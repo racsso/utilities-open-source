@@ -59,7 +59,7 @@ local function StopSwing()
 end
 
 
-Character.Destroying:Once(function()
+Sword.Destroying:Once(function()
 	RaycastHibox.Destroy()
 end)
 ```
