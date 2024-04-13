@@ -41,6 +41,7 @@ RaycastHibox = QRaycast.New({
 	Type = "Raycast"
 	AttachmentName = "DmgPoint",
 	RayParams = MeleeRayParams,
+	Debounce = true,
 	OnHit = OnHitFunction,
 })
 
