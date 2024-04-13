@@ -8,6 +8,7 @@ Object: BasePart - The part that is used as either the parent for the attachment
 Type: String - The 2 types of raycasting that can be done. "Raycast" uses attachments and "BlockCast" is blockcasting.
 RayParams: RaycastParams - The RaycastParams used for all raycasts done by the module.
 AttachmentName: String - Attachments with this specefied name are used as raycast points.
+Debounce: boolean - If set to true, then whatever is returned in the OnHit function can only be hit once until the raycast hitbox is started or stopped again.
 OnHit: function - The function that's called whenever a hit gets validated. Returns the hit character.
 ```
 
@@ -18,6 +19,7 @@ local Sword = Character:WaitForChild("Sword")
 
 local QRaycast = require(game.ReplicatedStorage:WaitForChild("Modules"):WaitForChild("QuickRaycast"))
 
+local RaycastHibox: QRaycast.ModuleType = nil
 local Debug = true
 
 local MeleeRayParams = RaycastParams.new()
@@ -34,7 +36,7 @@ local function OnHitFunction(Character: Model)
 end
 
 
-local RaycastHibox = QRaycast.New({
+RaycastHibox = QRaycast.New({
 	Object = Sword,
 	Type = "Raycast"
 	AttachmentName = "DmgPoint",
