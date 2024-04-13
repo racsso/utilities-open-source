@@ -1,4 +1,4 @@
--- Written by racs(_superFan) https://www.roblox.com/users/3677722857/profile
+-- Written by racs(_superFan) https://www.roblox.com/users/3677722857/
 -- 2024
 
 local RunService = game:GetService("RunService")
