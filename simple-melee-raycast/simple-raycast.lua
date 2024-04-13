@@ -204,17 +204,17 @@ return {New = function(Settings: Settings): ModuleType
 						Trail.Enabled = true
 					end
 				end
-			
-				if Module.Type == "BlockCast" then					
-					ProcessRay(workspace:Blockcast(Start, Module.Object.Size, End.Position - Start.Position, Module.RayParams))
-				else
-					for _, Attachment: Attachment in pairs(Attachments) do
-						local Start = (Start * Attachment.CFrame).Position
-						local End = (End * Attachment.CFrame).Position
+			end
 
-						ProcessRay(workspace:Raycast(Start, End - Start, Module.RayParams))
-					end	
-				end
+			if Module.Type == "BlockCast" then					
+				ProcessRay(workspace:Blockcast(Start, Module.Object.Size, End.Position - Start.Position, Module.RayParams))
+			else
+				for _, Attachment: Attachment in pairs(Attachments) do
+					local Start = (Start * Attachment.CFrame).Position
+					local End = (End * Attachment.CFrame).Position
+
+					ProcessRay(workspace:Raycast(Start, End - Start, Module.RayParams))
+				end	
 			end
 		end
 	
